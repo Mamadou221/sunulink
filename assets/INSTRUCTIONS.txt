@@ -1,0 +1,30 @@
+INSTRUCTIONS POUR LES ASSETS
+============================
+
+LOGO:
+-----
+Le site utilise actuellement Logo.svg comme logo principal.
+Si vous avez un logo PNG, vous pouvez :
+1. Ajouter votre logo PNG dans ce dossier avec le nom "Logo.png"
+2. Modifier les fichiers HTML pour utiliser Logo.png au lieu de Logo.svg
+   (cherchez "Logo.svg" et remplacez par "Logo.png")
+
+IMAGES POUR GESTION LOCATIVE:
+------------------------------
+Ajoutez les images suivantes dans ce dossier :
+- GS1.jpg (ou .png)
+- GS2.jpg (ou .png)  
+- GS3.jpg (ou .png)
+
+Ces images seront utilisées dans le carrousel de la section "Gestion Locative" 
+de la page Immobilier.
+
+Résolution recommandée : 1200x800 pixels minimum.
+
+
+
+
+
+
+
+

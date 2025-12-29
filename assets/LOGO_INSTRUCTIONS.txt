@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════
+  INSTRUCTIONS POUR L'INTÉGRATION DE VOTRE LOGO
+═══════════════════════════════════════════════════════════════
+
+📁 OÙ PLACER VOTRE LOGO :
+--------------------------
+Placez votre fichier logo dans ce dossier (assets/) avec le nom :
+
+   ✅ Logo.png  (recommandé - meilleure qualité)
+   ✅ Logo.svg  (si format vectoriel)
+   ✅ Logo.jpg  (si format JPG uniquement)
+
+🔄 FONCTIONNEMENT :
+-------------------
+Le site essaiera d'abord de charger Logo.png
+Si Logo.png n'existe pas, il chargera Logo.svg en fallback
+
+📐 DIMENSIONS RECOMMANDÉES :
+------------------------------
+- Hauteur : environ 50-60px pour le header
+- Largeur : proportionnelle à votre logo
+- Format : PNG avec transparence de préférence
+
+📝 FORMATS ACCEPTÉS :
+---------------------
+- PNG (recommandé)
+- SVG (vectoriel)
+- JPG
+
+⚠️ IMPORTANT :
+---------------
+Une fois votre logo placé dans ce dossier avec le nom "Logo.png",
+il sera automatiquement utilisé sur toutes les pages du site.
+
+Si votre logo a un nom différent, vous devrez modifier les fichiers HTML :
+- index.html
+- import-export.html
+- immobilier.html
+- contact.html
+
+Cherchez : src="assets/Logo.png" et remplacez par le nom de votre fichier.
+
+═══════════════════════════════════════════════════════════════
