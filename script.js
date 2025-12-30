@@ -190,17 +190,17 @@ function initCarousels() {
       });
     });
     
-    // Auto-play (optional - uncomment to enable)
-    // let autoPlayInterval = setInterval(nextSlide, 5000);
+    // Auto-play activé
+    let autoPlayInterval = setInterval(nextSlide, 5000);
     
     // Pause on hover
-    // carousel.addEventListener('mouseenter', () => {
-    //   clearInterval(autoPlayInterval);
-    // });
+    carousel.addEventListener('mouseenter', () => {
+      clearInterval(autoPlayInterval);
+    });
     
-    // carousel.addEventListener('mouseleave', () => {
-    //   autoPlayInterval = setInterval(nextSlide, 5000);
-    // });
+    carousel.addEventListener('mouseleave', () => {
+      autoPlayInterval = setInterval(nextSlide, 5000);
+    });
     
     // Touch/swipe support for mobile
     let startX = 0;
@@ -266,6 +266,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize values section animations
   initValuesAnimations();
+  
+  // Initialize modern values section animations
+  initModernValuesAnimations();
+  
+  // Initialize expertise section animations
+  initExpertiseAnimations();
 });
 
 // Values Section - Enhanced Scroll Animations
@@ -301,6 +307,82 @@ function initValuesAnimations() {
 
   // Observe the values section
   valuesObserver.observe(valuesSection);
+}
+
+// Modern Values Section - Enhanced Scroll Animations
+function initModernValuesAnimations() {
+  const valuesSection = document.querySelector('.values-section-modern');
+  if (!valuesSection) return;
+
+  const valueCards = valuesSection.querySelectorAll('.value-card-modern');
+  if (valueCards.length === 0) return;
+
+  // Options for the Intersection Observer
+  const valuesObserverOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  // Create observer for modern values section
+  const valuesObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animate each card with a stagger effect
+        valueCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('animate');
+          }, index * 200); // Stagger delay: 200ms between each card
+        });
+        
+        // Unobserve after animation to prevent re-triggering
+        valuesObserver.unobserve(entry.target);
+      }
+    });
+  }, valuesObserverOptions);
+
+  // Observe the values section
+  valuesObserver.observe(valuesSection);
+}
+
+// Expertise Section - Scroll Animations
+function initExpertiseAnimations() {
+  const expertiseSection = document.querySelector('.expertise-section');
+  if (!expertiseSection) return;
+
+  const expertiseCards = expertiseSection.querySelectorAll('.expertise-card');
+  if (expertiseCards.length === 0) return;
+
+  // Options for the Intersection Observer
+  const expertiseObserverOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  // Create observer for expertise section
+  const expertiseObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animate header
+        const header = expertiseSection.querySelector('.expertise-header');
+        if (header) {
+          header.style.animation = 'fadeInUp 0.8s ease 0.2s forwards';
+        }
+        
+        // Animate each card with a stagger effect
+        expertiseCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('animate');
+          }, index * 200); // Stagger delay: 200ms between each card
+        });
+        
+        // Unobserve after animation to prevent re-triggering
+        expertiseObserver.unobserve(entry.target);
+      }
+    });
+  }, expertiseObserverOptions);
+
+  // Observe the expertise section
+  expertiseObserver.observe(expertiseSection);
 }
 
 

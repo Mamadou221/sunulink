@@ -3,7 +3,7 @@
 // ============================================
 
 // WhatsApp phone number
-const WHATSAPP_PHONE = '33783397062';
+const WHATSAPP_PHONE = '330768531713';
 
 // Text mapping for automatic translation (French -> Translation Key)
 const textMapping = {
@@ -26,12 +26,12 @@ const textMapping = {
   'Notre Mission': 'home.mission',
   'Créer des ponts économiques durables entre le Sénégal et le monde, en alliant qualité, fiabilité et innovation.': 'home.missionText',
   'Nos Valeurs': 'home.values',
-  'Transparence': 'home.transparency',
-  'Nous privilégions la transparence dans toutes nos relations commerciales et immobilières pour établir une confiance durable.': 'home.transparencyDesc',
-  'Excellence': 'home.excellence',
-  'L\'excellence est au cœur de nos services. Nous nous engageons à fournir des solutions de la plus haute qualité.': 'home.excellenceDesc',
-  'Engagement local': 'home.commitment',
-  'Nous sommes profondément engagés dans le développement économique et social du Sénégal.': 'home.commitmentDesc',
+  'Qualité responsable': 'home.quality',
+  'Nous appliquons des standards stricts à chaque étape, de la sélection des matières premières jusqu\'à la livraison finale.': 'home.qualityDesc',
+  'Fiabilité & confiance': 'home.reliability',
+  'Nous construisons des partenariats durables basés sur la transparence, le respect des engagements et la performance.': 'home.reliabilityDesc',
+  'Impact local & vision durable': 'home.impact',
+  'Nous croyons en un développement économique ancré localement et ouvert sur le monde, au service des communautés et des marchés.': 'home.impactDesc',
   'Notre Vision': 'home.vision',
   'Devenir un acteur clé du commerce et de l\'immobilier africain, reconnu pour son professionnalisme et son impact positif.': 'home.visionText',
   'Prêt à commencer votre projet ?': 'home.ctaTitle',
@@ -512,6 +512,7 @@ function translatePageContent(lang) {
     else if (text === 'Nos Produits' || text === 'Our Products') key = 'importExport.products';
     else if (text === 'Nos Services Immobiliers' || text === 'Our Real Estate Services') key = 'realEstate.services';
     else if (text === 'Villas & Appartements' || text === 'Villas & Apartments') key = 'realEstate.villas';
+    else if (text === 'Ils nous font confiance' || text === 'They trust us') key = 'home.partners';
     else if (text === 'Gestion Locative' || text === 'Rental Management') key = 'realEstate.management';
     else if (text === 'Trouvez votre bien idéal' || text === 'Find your ideal property') key = 'realEstate.findProperty';
     else if (text === 'Besoin de nos services ?' || text === 'Need our services?') key = 'importExport.needServices';
@@ -548,26 +549,26 @@ function translatePageContent(lang) {
       }
     });
     
-    // Translate value cards
-    document.querySelectorAll('.card .card-title').forEach(title => {
+    // Translate value cards (modern values section)
+    document.querySelectorAll('.value-title-modern').forEach(title => {
       const text = title.textContent.trim();
-      if (text === 'Transparence' || text === 'Transparency') {
-        title.textContent = t('home.transparency', lang);
-      } else if (text === 'Excellence') {
-        title.textContent = t('home.excellence', lang);
-      } else if (text === 'Engagement local' || text === 'Local Commitment') {
-        title.textContent = t('home.commitment', lang);
+      if (text === 'Qualité responsable' || text === 'Responsible quality') {
+        title.textContent = t('home.quality', lang);
+      } else if (text === 'Fiabilité & confiance' || text === 'Reliability & trust') {
+        title.textContent = t('home.reliability', lang);
+      } else if (text === 'Impact local & vision durable' || text === 'Local impact & sustainable vision') {
+        title.textContent = t('home.impact', lang);
       }
     });
     
-    document.querySelectorAll('.card .card-description').forEach(desc => {
+    document.querySelectorAll('.value-text-modern').forEach(desc => {
       const text = desc.textContent.trim();
-      if (text.includes('transparence dans toutes') || text.includes('transparency in all')) {
-        desc.textContent = t('home.transparencyDesc', lang);
-      } else if (text.includes('excellence est au cœur') || text.includes('Excellence is at the heart')) {
-        desc.textContent = t('home.excellenceDesc', lang);
-      } else if (text.includes('profondément engagés') || text.includes('deeply committed')) {
-        desc.textContent = t('home.commitmentDesc', lang);
+      if (text.includes('standards stricts à chaque étape') || text.includes('Strict standards are applied')) {
+        desc.textContent = t('home.qualityDesc', lang);
+      } else if (text.includes('partenariats durables basés') || text.includes('long-term partnerships based')) {
+        desc.textContent = t('home.reliabilityDesc', lang);
+      } else if (text.includes('développement économique ancré') || text.includes('locally rooted growth')) {
+        desc.textContent = t('home.impactDesc', lang);
       }
     });
   }
@@ -856,6 +857,16 @@ function updateLanguageButtons() {
 // ============================================
 
 function initWhatsAppButtons() {
+  // Gérer tous les boutons WhatsApp avec data-section
+  document.querySelectorAll('.whatsapp-btn[data-section]').forEach(btn => {
+    const sectionName = btn.getAttribute('data-section');
+    const currentLang = getCurrentLang();
+    btn.href = getWhatsAppUrl(sectionName, 'section', currentLang);
+    btn.target = '_blank';
+    btn.rel = 'noopener noreferrer';
+  });
+  
+  // Ajouter WhatsApp aux produits et services (logique existante)
   addWhatsAppToProducts();
   addWhatsAppToServices();
 }
@@ -877,6 +888,7 @@ function addWhatsAppToProducts() {
     
     const whatsappBtn = document.createElement('a');
     whatsappBtn.className = 'whatsapp-btn';
+    whatsappBtn.setAttribute('data-section', productName);
     whatsappBtn.href = getWhatsAppUrl(productName, 'product', currentLang);
     whatsappBtn.target = '_blank';
     whatsappBtn.rel = 'noopener noreferrer';
@@ -906,6 +918,7 @@ function addWhatsAppToServices() {
     
     const whatsappBtn = document.createElement('a');
     whatsappBtn.className = 'whatsapp-service-btn';
+    whatsappBtn.setAttribute('data-section', serviceName);
     whatsappBtn.href = getWhatsAppUrl(serviceName, 'service', currentLang);
     whatsappBtn.target = '_blank';
     whatsappBtn.rel = 'noopener noreferrer';
@@ -925,15 +938,11 @@ function addWhatsAppToServices() {
   });
 }
 
-function getWhatsAppUrl(itemName, type, lang) {
-  const messageTemplate = type === 'product' 
-    ? t('whatsapp.productMessage', lang)
-    : t('whatsapp.serviceMessage', lang);
-  
-  const message = replacePlaceholders(messageTemplate, {
-    product: itemName,
-    service: itemName
-  });
+function getWhatsAppUrl(sectionName, type, lang) {
+  // Message prérempli intelligent avec le nom de la section
+  const message = lang === 'fr' 
+    ? `Bonjour, je vous contacte concernant la section ${sectionName}`
+    : `Hello, I'm contacting you regarding the ${sectionName} section`;
   
   const encodedMessage = encodeURIComponent(message);
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
