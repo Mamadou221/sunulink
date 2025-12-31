@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <!-- Header -->
@@ -54,7 +55,13 @@
                 <!-- Contact Form -->
                 <div>
                     <h2 style="margin-bottom: var(--spacing-md);">Envoyez-nous un message</h2>
-                    <form class="contact-form" style="box-shadow: none; padding: 0;">
+                    <form class="contact-form" id="contactForm" action="https://formsubmit.co/sunulinkglobal@gmail.com" method="POST" style="box-shadow: none; padding: 30px;">
+                        <input type="hidden" name="_subject" value="Nouveau message depuis le site SunuLink Global">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="?success=true">
+                        <input type="hidden" name="_cc" value="contact@sunulinkglobal.com">
+                        <input type="hidden" name="_template" value="box">
+                        <input type="hidden" name="_autoresponse" value="Merci pour votre message ! Nous vous répondrons dans les plus brefs délais. - SunuLink Global">
                         <div class="form-group">
                             <label for="name" class="form-label">Nom *</label>
                             <input type="text" id="name" name="name" class="form-input" required>
@@ -72,35 +79,37 @@
                             <textarea id="message" name="message" class="form-textarea" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer</button>
+                        <div id="formMessage" style="margin-top: var(--spacing-md); display: none; padding: var(--spacing-sm); border-radius: 8px; text-align: center;"></div>
                     </form>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
                     <h2 style="margin-bottom: var(--spacing-md);">Informations de contact</h2>
-                    <div style="background: var(--color-white); padding: var(--spacing-lg); border-radius: 16px; box-shadow: var(--shadow-md);">
+                    <div class="contact-info" style="background: var(--color-white); padding: var(--spacing-lg); border-radius: 16px; box-shadow: var(--shadow-md);">
                         <div style="margin-bottom: var(--spacing-md);">
-                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary);">📍 Adresse</h3>
-                            <p style="color: var(--color-gray);">
+                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary); display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-map-marker-alt" style="font-size: 1.125rem;"></i>
+                                Adresse
+                            </h3>
+                            <p style="color: var(--color-gray); margin-left: 1.75rem;">
                                 Siège : 11 rue Malan, Immeuble Electra 2<br>
                                 Dakar, Sénégal
                             </p>
                         </div>
                         <div style="margin-bottom: var(--spacing-md);">
-                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary);">📞 Téléphone</h3>
-                            <a href="tel:+330768531713" style="color: var(--color-gray); font-size: 1.125rem;">+33 07 68 53 17 13</a>
+                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary); display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-phone" style="font-size: 1.125rem;"></i>
+                                Téléphone
+                            </h3>
+                            <a href="tel:+330768531713" style="color: var(--color-gray); font-size: 1.125rem; margin-left: 1.75rem; display: inline-block;">+33 07 68 53 17 13</a>
                         </div>
                         <div style="margin-bottom: var(--spacing-md);">
-                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary);">✉️ Email</h3>
-                            <a href="mailto:contact@sunulinkglobal.com" style="color: var(--color-gray); font-size: 1.125rem;">contact@sunulinkglobal.com</a>
-                        </div>
-                        <div style="margin-top: var(--spacing-lg);">
-                            <a href="#" class="btn btn-accent whatsapp-btn" data-section="Contact" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                                </svg>
-                                Nous contacter sur WhatsApp
-                            </a>
+                            <h3 style="font-size: 1.25rem; margin-bottom: var(--spacing-xs); color: var(--color-primary); display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-envelope" style="font-size: 1.125rem;"></i>
+                                Email
+                            </h3>
+                            <a href="mailto:contact@sunulinkglobal.com" style="color: var(--color-gray); font-size: 1.125rem; margin-left: 1.75rem; display: inline-block;">contact@sunulinkglobal.com</a>
                         </div>
                     </div>
                 </div>
@@ -181,6 +190,97 @@
     <script src="translations.js"></script>
     <script src="features.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Vérifier si l'URL contient un paramètre de succès (redirection FormSubmit)
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                showMessage('✓ Votre message a été envoyé avec succès !', true);
+                // Nettoyer l'URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
+        // Fonction pour afficher un message
+        function showMessage(message, isSuccess) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.style.display = 'block';
+            if (isSuccess) {
+                formMessage.style.backgroundColor = 'rgba(0, 168, 107, 0.1)';
+                formMessage.style.color = 'var(--color-primary)';
+                formMessage.style.border = '1px solid var(--color-primary)';
+            } else {
+                formMessage.style.backgroundColor = 'rgba(255, 107, 53, 0.1)';
+                formMessage.style.color = 'var(--color-accent)';
+                formMessage.style.border = '1px solid var(--color-accent)';
+            }
+            formMessage.textContent = message;
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Fonction pour réinitialiser le bouton
+        function resetSubmitButton() {
+            const submitBtn = document.getElementById('contactForm').querySelector('button[type="submit"]');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Envoyer';
+        }
+
+        // Gestion du formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            const form = this;
+            
+            // Validation côté client
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email || !message) {
+                showMessage('✗ Veuillez remplir tous les champs obligatoires.', false);
+                resetSubmitButton();
+                return false;
+            }
+            
+            // Désactiver le bouton pendant l'envoi
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+            formMessage.style.display = 'none';
+            
+            // Préparer les données du formulaire
+            const formData = new FormData(form);
+            
+            // Envoyer la requête à FormSubmit
+            fetch('https://formsubmit.co/ajax/sunulinkglobal@gmail.com', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Succès
+                    showMessage('✓ Votre message a été envoyé avec succès !', true);
+                    form.reset();
+                } else {
+                    // Erreur
+                    showMessage('✗ Une erreur est survenue. Veuillez réessayer plus tard.', false);
+                }
+                resetSubmitButton();
+            })
+            .catch(error => {
+                // Erreur réseau ou serveur
+                console.error('Erreur:', error);
+                showMessage('✗ Une erreur est survenue. Veuillez réessayer plus tard.', false);
+                resetSubmitButton();
+            });
+        });
+    </script>
 </body>
 </html>
 

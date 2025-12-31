@@ -385,5 +385,70 @@ function initExpertiseAnimations() {
   expertiseObserver.observe(expertiseSection);
 }
 
+// Service cards background images loader with fallback
+function initServiceCardBackgrounds() {
+  const importExportCard = document.querySelector('.service-card-import-export');
+  const immobilierCard = document.querySelector('.service-card-immobilier');
+  
+  // Fonction pour tester si une image existe
+  function testImage(url, callback) {
+    const img = new Image();
+    img.onload = function() { callback(true); };
+    img.onerror = function() { callback(false); };
+    img.src = url;
+  }
+  
+  // Gestion Import-Export
+  if (importExportCard) {
+    const imageFormats = [
+      'assets/images/services/import-export-bg.jpg',
+      'assets/images/services/import-export-bg.png',
+      'assets/images/services/import-export-bg.webp'
+    ];
+    
+    let imageFound = false;
+    imageFormats.forEach((url, index) => {
+      testImage(url, function(exists) {
+        if (exists && !imageFound) {
+          imageFound = true;
+          importExportCard.style.backgroundImage = `url('${url}')`;
+        } else if (!exists && index === imageFormats.length - 1 && !imageFound) {
+          // Si aucune image n'est trouvée, utiliser le fallback CSS
+          importExportCard.classList.add('no-background-image');
+        }
+      });
+    });
+  }
+  
+  // Gestion Immobilier
+  if (immobilierCard) {
+    const imageFormats = [
+      'assets/images/services/immobilier-bg.jpg',
+      'assets/images/services/immobilier-bg.png',
+      'assets/images/services/immobilier-bg.webp'
+    ];
+    
+    let imageFound = false;
+    imageFormats.forEach((url, index) => {
+      testImage(url, function(exists) {
+        if (exists && !imageFound) {
+          imageFound = true;
+          immobilierCard.style.backgroundImage = `url('${url}')`;
+        } else if (!exists && index === imageFormats.length - 1 && !imageFound) {
+          // Si aucune image n'est trouvée, utiliser le fallback CSS
+          immobilierCard.classList.add('no-background-image');
+        }
+      });
+    });
+  }
+}
+
+// Initialiser les images de fond des cartes de service
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initServiceCardBackgrounds);
+} else {
+  initServiceCardBackgrounds();
+}
+
 
 

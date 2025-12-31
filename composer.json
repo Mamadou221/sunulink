@@ -1,0 +1,12 @@
+{
+    "name": "sunulinkglobal/website",
+    "description": "Site web SunuLink Global - Import-Export et Immobilier",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
+

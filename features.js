@@ -857,11 +857,17 @@ function updateLanguageButtons() {
 // ============================================
 
 function initWhatsAppButtons() {
-  // Gérer tous les boutons WhatsApp avec data-section
-  document.querySelectorAll('.whatsapp-btn[data-section]').forEach(btn => {
+  // Gérer tous les boutons WhatsApp avec data-section (ronds et normaux)
+  document.querySelectorAll('.whatsapp-btn[data-section], .whatsapp-btn-round[data-section]').forEach(btn => {
     const sectionName = btn.getAttribute('data-section');
     const currentLang = getCurrentLang();
-    btn.href = getWhatsAppUrl(sectionName, 'section', currentLang);
+    // Déterminer le type selon la page et le contexte
+    let type = 'section';
+    if (window.location.pathname.includes('import-export') && btn.classList.contains('whatsapp-btn-round')) {
+      // Les boutons ronds sur la page Import-Export sont pour les produits
+      type = 'product';
+    }
+    btn.href = getWhatsAppUrl(sectionName, type, currentLang);
     btn.target = '_blank';
     btn.rel = 'noopener noreferrer';
   });
@@ -874,6 +880,21 @@ function initWhatsAppButtons() {
 function addWhatsAppToProducts() {
   if (!window.location.pathname.includes('import-export')) return;
   
+  // Ne pas ajouter de boutons automatiques sur la page Import-Export
+  // Les boutons ronds sont maintenant gérés directement dans le HTML
+  // Supprimer les anciens boutons WhatsApp s'ils existent
+  document.querySelectorAll('.whatsapp-btn:not(.whatsapp-btn-round), .whatsapp-service-btn').forEach(btn => {
+    // Ne supprimer que les boutons qui ne sont pas des boutons ronds
+    if (!btn.classList.contains('whatsapp-btn-round')) {
+      btn.remove();
+    }
+  });
+  
+  // Ne pas créer de nouveaux boutons automatiques
+  return;
+  
+  // Code original commenté pour référence
+  /*
   const productCards = document.querySelectorAll('.card');
   const currentLang = getCurrentLang();
   
@@ -901,11 +922,22 @@ function addWhatsAppToProducts() {
     
     card.appendChild(whatsappBtn);
   });
+  */
 }
 
 function addWhatsAppToServices() {
+  // Ne pas ajouter de boutons automatiques sur la page immobilier
+  // Les boutons sont maintenant gérés directement dans le HTML
   if (!window.location.pathname.includes('immobilier')) return;
   
+  // Supprimer les anciens boutons WhatsApp s'ils existent
+  document.querySelectorAll('.whatsapp-service-btn').forEach(btn => btn.remove());
+  
+  // Ne pas créer de nouveaux boutons automatiques
+  return;
+  
+  // Code original commenté pour référence
+  /*
   const serviceSections = document.querySelectorAll('[style*="margin-bottom: var(--spacing-xl)"]');
   const currentLang = getCurrentLang();
   
@@ -936,13 +968,27 @@ function addWhatsAppToServices() {
       section.appendChild(whatsappBtn);
     }
   });
+  */
 }
 
 function getWhatsAppUrl(sectionName, type, lang) {
-  // Message prérempli intelligent avec le nom de la section
-  const message = lang === 'fr' 
-    ? `Bonjour, je vous contacte concernant la section ${sectionName}`
-    : `Hello, I'm contacting you regarding the ${sectionName} section`;
+  // Messages personnalisés selon la section
+  let message;
+  
+  if (sectionName === 'Villas & Appartements' || sectionName === 'Villas & Apartments') {
+    message = lang === 'fr' 
+      ? 'Bonjour, je suis intéressé par vos Villas & Appartements. Pouvez-vous me donner plus d\'informations ?'
+      : 'Hello, I am interested in your Villas & Apartments. Could you please provide more information?';
+  } else if (sectionName === 'Gestion Locative' || sectionName === 'Property Management') {
+    message = lang === 'fr' 
+      ? 'Bonjour, je suis intéressé par votre service de Gestion Locative. Pouvez-vous me donner plus d\'informations ?'
+      : 'Hello, I am interested in your Property Management services. Could you please provide more information?';
+  } else {
+    // Message générique pour les autres sections
+    message = lang === 'fr' 
+      ? `Bonjour, je vous contacte concernant la section ${sectionName}`
+      : `Hello, I'm contacting you regarding the ${sectionName} section`;
+  }
   
   const encodedMessage = encodeURIComponent(message);
   return `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;

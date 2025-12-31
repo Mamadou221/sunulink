@@ -23,3 +23,4 @@ Placez vos images personnelles dans ce dossier avec les noms suivants :
 Les images seront automatiquement redimensionnées et adaptées au design existant. Le CSS garantit un affichage cohérent sur tous les appareils.
 
 
+

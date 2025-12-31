@@ -548,6 +548,18 @@ html, body {
   object-fit: cover;
 }
 
+/* WhatsApp button overlay on carousel images */
+.carousel-whatsapp {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.carousel-slide {
+  overflow: hidden;
+}
+
 .carousel-nav {
   position: absolute;
   top: 50%;
@@ -640,7 +652,7 @@ html, body {
   background: var(--color-dark);
   color: var(--color-white);
   padding: var(--spacing-lg) 0 var(--spacing-md);
-  margin-top: var(--spacing-xl);
+  margin-top: 0;
 }
 
 .footer-content {
@@ -684,25 +696,26 @@ html, body {
 }
 
 .social-link {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-normal);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   color: var(--color-white);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
 }
 
 .social-link svg {
-  width: 24px;
-  height: 24px;
-  z-index: 1;
-  transition: var(--transition-fast);
+  width: 22px;
+  height: 22px;
+  z-index: 2;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-link::before {
@@ -713,16 +726,54 @@ html, body {
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: var(--color-white);
-  transform: translate(-50%, -50%);
-  transition: var(--transition-normal);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.social-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
 }
 
 .social-link:hover {
-  background: var(--color-white);
-  border-color: var(--color-white);
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.15) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.social-link:hover::before {
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.social-link:hover::after {
+  opacity: 1;
+}
+
+.social-link:hover svg {
+  transform: scale(1.1);
+}
+
+/* Dark mode for social links */
+[data-theme="dark"] .social-link {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .social-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
 .social-link:hover::before {
@@ -907,6 +958,203 @@ html, body {
 .service-card:hover .service-icon svg {
   color: var(--color-accent);
   transform: scale(1.1);
+}
+
+/* Service Cards with Background Images */
+.service-card-import-export,
+.service-card-immobilier {
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
+}
+
+.service-card-import-export {
+  background-image: url('../images/services/import-export-bg.jpg');
+}
+
+.service-card-immobilier {
+  background-image: url('../images/services/immobilier-bg.jpg');
+}
+
+/* Fallback si les images ne sont pas trouvées */
+.service-card-import-export:not([style*="background-image"]),
+.service-card-import-export.no-background-image {
+  background: linear-gradient(135deg, var(--color-white) 0%, rgba(0, 168, 107, 0.02) 100%);
+}
+
+.service-card-immobilier:not([style*="background-image"]),
+.service-card-immobilier.no-background-image {
+  background: linear-gradient(135deg, var(--color-white) 0%, rgba(255, 107, 53, 0.02) 100%);
+}
+
+/* Quand pas d'image, ajuster les couleurs du texte */
+.service-card-import-export.no-background-image .card-title,
+.service-card-immobilier.no-background-image .card-title {
+  color: var(--color-dark);
+  text-shadow: none;
+}
+
+.service-card-import-export.no-background-image .card-description,
+.service-card-immobilier.no-background-image .card-description {
+  color: var(--color-gray);
+  text-shadow: none;
+}
+
+.service-card-import-export.no-background-image .service-icon svg,
+.service-card-immobilier.no-background-image .service-icon svg {
+  color: var(--color-primary);
+  filter: none;
+}
+
+.service-card-import-export.no-background-image .service-overlay,
+.service-card-immobilier.no-background-image .service-overlay {
+  display: none;
+}
+
+/* Overlay pour la lisibilité */
+.service-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  transition: var(--transition-normal);
+  z-index: 1;
+}
+
+.service-card:hover .service-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+/* Contenu de la carte (au-dessus de l'overlay) */
+.service-content {
+  position: relative;
+  z-index: 2;
+  padding: var(--spacing-md);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Texte sur les cartes avec images de fond */
+.service-card-import-export .card-title,
+.service-card-immobilier .card-title {
+  color: var(--color-white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--spacing-sm);
+}
+
+.service-card-import-export .card-description,
+.service-card-immobilier .card-description {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--spacing-sm);
+}
+
+.service-card-import-export .service-icon svg,
+.service-card-immobilier .service-icon svg {
+  color: var(--color-white);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.service-card-import-export:hover .service-icon svg,
+.service-card-immobilier:hover .service-icon svg {
+  color: var(--color-accent);
+  filter: drop-shadow(0 2px 12px rgba(255, 107, 53, 0.6));
+}
+
+/* Hover effect pour les cartes avec images */
+.service-card-import-export:hover,
+.service-card-immobilier:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.service-card-import-export::before,
+.service-card-immobilier::before {
+  display: none;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .service-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+[data-theme="dark"] .service-card:hover .service-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+[data-theme="dark"] .service-card-import-export:not([style*="background-image"]),
+[data-theme="dark"] .service-card-import-export.no-background-image {
+  background: linear-gradient(135deg, #2D2D2D 0%, rgba(0, 168, 107, 0.1) 100%);
+}
+
+[data-theme="dark"] .service-card-immobilier:not([style*="background-image"]),
+[data-theme="dark"] .service-card-immobilier.no-background-image {
+  background: linear-gradient(135deg, #2D2D2D 0%, rgba(255, 107, 53, 0.1) 100%);
+}
+
+[data-theme="dark"] .service-card-import-export.no-background-image .card-title,
+[data-theme="dark"] .service-card-immobilier.no-background-image .card-title {
+  color: var(--color-white);
+}
+
+[data-theme="dark"] .service-card-import-export.no-background-image .card-description,
+[data-theme="dark"] .service-card-immobilier.no-background-image .card-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark Mode : Titres orange pour les cartes avec images de fond */
+[data-theme="dark"] .service-card-import-export .card-title,
+[data-theme="dark"] .service-card-immobilier .card-title {
+  color: var(--color-accent);
+  text-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .service-card-import-export,
+  .service-card-immobilier {
+    min-height: 350px;
+  }
+  
+  .service-content {
+    padding: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card-import-export,
+  .service-card-immobilier {
+    min-height: 320px;
+  }
 }
 
 /* Contact Form */
@@ -1701,12 +1949,12 @@ html, body {
   border-color: rgba(0, 168, 107, 0.3);
 }
 
-[data-theme="dark"] .service-card {
+[data-theme="dark"] .service-card:not(.service-card-import-export):not(.service-card-immobilier) {
   background: linear-gradient(135deg, #2D2D2D 0%, rgba(0, 168, 107, 0.1) 100%);
   border-color: rgba(0, 168, 107, 0.3);
 }
 
-[data-theme="dark"] .service-card:hover {
+[data-theme="dark"] .service-card:not(.service-card-import-export):not(.service-card-immobilier):hover {
   background: linear-gradient(135deg, #3D3D3D 0%, rgba(0, 168, 107, 0.15) 100%);
 }
 
@@ -1918,7 +2166,7 @@ html, body {
   border-radius: 16px;
   padding: var(--spacing-lg);
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s ease-in-out;
   opacity: 0;
   transform: translateY(30px);
   box-shadow: var(--shadow-md);
@@ -1928,12 +2176,6 @@ html, body {
 .value-card-modern.animate {
   opacity: 1;
   transform: translateY(0);
-}
-
-.value-card-modern:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary);
 }
 
 .value-icon-modern {
@@ -1946,13 +2188,20 @@ html, body {
   background: linear-gradient(135deg, rgba(0, 168, 107, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
   border-radius: 50%;
   color: var(--color-primary);
-  transition: all 0.4s ease;
+  transition: all 0.4s ease-in-out;
+}
+
+.value-card-modern:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 168, 107, 0.15), 0 0 20px rgba(255, 107, 53, 0.1);
+  border-color: var(--color-primary);
 }
 
 .value-card-modern:hover .value-icon-modern {
-  transform: scale(1.1) rotate(5deg);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  color: var(--color-white);
+  transform: translateY(-4px) scale(1.08);
+  background: var(--color-gray-light);
+  color: var(--color-accent);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.25), 0 0 16px rgba(255, 107, 53, 0.15);
 }
 
 .value-title-modern {
@@ -1969,14 +2218,121 @@ html, body {
   margin: 0;
 }
 
+/* Dark Mode - Values Section */
+[data-theme="dark"] .value-card-modern {
+  background: #2D2D2D;
+  border-color: rgba(0, 168, 107, 0.3);
+}
+
+[data-theme="dark"] .value-card-modern:hover {
+  box-shadow: 0 12px 40px rgba(0, 168, 107, 0.25), 0 0 20px rgba(255, 107, 53, 0.15);
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .value-card-modern:hover .value-icon-modern {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3), 0 0 16px rgba(255, 107, 53, 0.2);
+}
+
+[data-theme="dark"] .value-title-modern {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .value-text-modern {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   CONTACT PAGE - FONT AWESOME ICONS
+   ============================================ */
+
+/* Styles pour les icônes Font Awesome dans la section contact */
+.contact-info h3 i.fas {
+  color: var(--color-primary);
+  transition: var(--transition-fast);
+}
+
+.contact-info h3:hover i.fas {
+  color: var(--color-accent);
+  transform: scale(1.1);
+}
+
+/* Dark mode pour les icônes de contact */
+[data-theme="dark"] .contact-info h3 i.fas {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .contact-info h3:hover i.fas {
+  color: var(--color-accent);
+}
+
+/* Message de formulaire */
+#formMessage {
+  transition: all 0.3s ease;
+}
+
+#formMessage.success {
+  background-color: rgba(0, 168, 107, 0.1) !important;
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-primary) !important;
+}
+
+#formMessage.error {
+  background-color: rgba(255, 107, 53, 0.1) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid var(--color-accent) !important;
+}
+
+[data-theme="dark"] #formMessage.success {
+  background-color: rgba(0, 168, 107, 0.2) !important;
+  border-color: var(--color-primary) !important;
+}
+
+[data-theme="dark"] #formMessage.error {
+  background-color: rgba(255, 107, 53, 0.2) !important;
+  border-color: var(--color-accent) !important;
+}
+
+/* ============================================
+   DOCUMENTS SECTION - BUTTONS ALIGNMENT
+   ============================================ */
+
+/* Alignement des boutons dans la section Documents */
+.document-card > div:last-child {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.document-card > div:last-child > a {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+  flex-shrink: 1;
+}
+
+/* Sur mobile, permettre le wrap si nécessaire */
+@media (max-width: 480px) {
+  .document-card > div:last-child {
+    flex-wrap: wrap;
+  }
+  
+  .document-card > div:last-child > a {
+    flex: 1 1 auto;
+    min-width: calc(50% - 0.375rem);
+  }
+}
+
 /* ============================================
    PARTNERS SECTION
    ============================================ */
 
 .partners-section {
   background: var(--color-light);
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xl) 0 var(--spacing-md) 0;
   overflow: hidden;
+  margin-bottom: 0;
 }
 
 .partners-slider {
@@ -2159,6 +2515,95 @@ html, body {
   flex-grow: 1;
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* Products grid harmonization */
+.products-grid .product-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  height: 100%;
+  border-top: 4px solid var(--color-primary);
+  padding-bottom: 60px;
+}
+
+.products-grid .product-card .card-image {
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.products-grid .product-card .card-title {
+  color: var(--color-primary);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.25rem;
+}
+
+.products-grid .product-card .card-description {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+/* WhatsApp round button */
+.whatsapp-btn-round {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #25D366;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  text-decoration: none;
+}
+
+.whatsapp-btn-round:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  background: #20BA5A;
+}
+
+.whatsapp-btn-round:active {
+  transform: scale(0.95);
+}
+
+.whatsapp-btn-round svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Dark mode for WhatsApp button */
+[data-theme="dark"] .whatsapp-btn-round {
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.5);
+}
+
+[data-theme="dark"] .whatsapp-btn-round:hover {
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+}
+
+/* Responsive adjustments for carousel WhatsApp buttons */
+@media (max-width: 768px) {
+  .carousel-whatsapp {
+    width: 44px;
+    height: 44px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .carousel-whatsapp svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* Additional responsive utilities */
