@@ -972,11 +972,11 @@ html, body {
 }
 
 .service-card-import-export {
-  background-image: url('../images/services/import-export-bg.jpg');
+  background-image: url('../images/services/import-export-bg.png');
 }
 
 .service-card-immobilier {
-  background-image: url('../images/services/immobilier-bg.jpg');
+  background-image: url('../images/services/immobilier-bg.png');
 }
 
 /* Fallback si les images ne sont pas trouvées */

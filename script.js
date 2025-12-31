@@ -401,8 +401,8 @@ function initServiceCardBackgrounds() {
   // Gestion Import-Export
   if (importExportCard) {
     const imageFormats = [
-      'assets/images/services/import-export-bg.jpg',
       'assets/images/services/import-export-bg.png',
+      'assets/images/services/import-export-bg.jpg',
       'assets/images/services/import-export-bg.webp'
     ];
     
@@ -423,8 +423,8 @@ function initServiceCardBackgrounds() {
   // Gestion Immobilier
   if (immobilierCard) {
     const imageFormats = [
-      'assets/images/services/immobilier-bg.jpg',
       'assets/images/services/immobilier-bg.png',
+      'assets/images/services/immobilier-bg.jpg',
       'assets/images/services/immobilier-bg.webp'
     ];
     
